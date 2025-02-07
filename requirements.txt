@@ -1,0 +1,6 @@
+gunicorn
+django-newsletter
+sorl-thumbnail
+django-debug-toolbar
+django-anymail[mailgun]
+django-extensions

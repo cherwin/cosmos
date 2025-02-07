@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "newsletter",
     "anymail",
+    "landing",
 ]
 
 MIDDLEWARE = [
