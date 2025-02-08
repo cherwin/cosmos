@@ -24,13 +24,14 @@ REQUIRED_ENV_VARS = [
     "POSTGRES_HOST",
     "MAILGUN_API_KEY",
     "MAILGUN_SENDER_DOMAIN",
+    "DEFAULT_FROM_EMAIL",
+    "SERVER_EMAIL",
 ]
 
 # quit immediately if we do not have the right environment variables
 missing_vars = [var for var in REQUIRED_ENV_VARS if not env(var, default=None)]
 if len(missing_vars) != 0:
     raise RuntimeError(f"Missing required environment variable(s): {missing_vars}")
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,19 +41,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-if os.environ.get("LOCAL_RUN"):
+if env("LOCAL_RUN"):
     DEBUG = True
 
-ALLOWED_HOSTS = [
-    "hammerhead-app-asm74.ondigitalocean.app",
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[
     "localhost",
     "127.0.0.1",
-]
+])
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -119,11 +119,11 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": os.getenv("POSTGRES_HOST"),
-        "PORT": int(os.getenv("POSTGRES_PORT", 5432)),
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),
+        "PORT": env.int("POSTGRES_PORT", default=5432),
     }
 }
 
@@ -174,10 +174,10 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
-    "MAILGUN_SENDER_DOMAIN": "mg.cherwin.io",
+    "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
+    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
 }
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
-DEFAULT_FROM_EMAIL = "boss@cherwin.io"
-SERVER_EMAIL = "django@cherwin.io"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = env("SERVER_EMAIL")
