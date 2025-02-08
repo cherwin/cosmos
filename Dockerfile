@@ -5,7 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /app
 
-COPY requirements.txt /app/
+COPY ./core/requirements.txt .
 
 RUN pip install --upgrade pip
 #RUN pip install 'channels[daphne]'

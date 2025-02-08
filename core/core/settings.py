@@ -97,8 +97,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": int(os.getenv("POSTGRES_PORT", 5432)),
     }
 }
 
@@ -149,7 +153,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ANYMAIL = {
-    "MAILGUN_API_KEY": os.environ.get("MAILGUN_API_KEY"),
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
     "MAILGUN_SENDER_DOMAIN": "mg.cherwin.io",
 }
 

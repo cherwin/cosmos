@@ -1,0 +1,23 @@
+services:
+  cosmos:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./core/:/app
+    ports:
+      - 8000:8000
+    env_file:
+      - ./core/.envrc
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=cosmos
+      - POSTGRES_PASSWORD=cosmos
+      - POSTGRES_DB=cosmos
+
+volumes:
+  postgres_data:
