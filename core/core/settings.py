@@ -10,8 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import environ
 import os
 from pathlib import Path
+
+env = environ.Env()
+
+REQUIRED_ENV_VARS = [
+    "SECRET_KEY",
+    "POSTGRES_DB",
+    "POSTGRES_USER",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_HOST",
+    "MAILGUN_API_KEY",
+    "MAILGUN_SENDER_DOMAIN",
+]
+
+# quit immediately if we do not have the right environment variables
+missing_vars = [var for var in REQUIRED_ENV_VARS if not env(var, default=None)]
+if len(missing_vars) != 0:
+    raise RuntimeError(f"Missing required environment variable(s): {missing_vars}")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
