@@ -176,6 +176,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ANYMAIL = {
     "MAILGUN_API_KEY": env("MAILGUN_API_KEY"),
     "MAILGUN_SENDER_DOMAIN": env("MAILGUN_SENDER_DOMAIN"),
+    "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3",
 }
 
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
