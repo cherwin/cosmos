@@ -31,6 +31,8 @@ if os.environ.get("LOCAL_RUN"):
 
 ALLOWED_HOSTS = [
     "hammerhead-app-asm74.ondigitalocean.app",
+    "localhost",
+    "127.0.0.1",
 ]
 
 INTERNAL_IPS = [
