@@ -1,5 +1,4 @@
 COSMOS
 ======
 
-# Run with docker
-make run
+Check the Makefile to understand how to run this project.
