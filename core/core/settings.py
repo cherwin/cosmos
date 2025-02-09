@@ -44,10 +44,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-if env("LOCAL_RUN"):
-    DEBUG = True
+DEBUG = env("LOCAL_RUN", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[
     "localhost",
