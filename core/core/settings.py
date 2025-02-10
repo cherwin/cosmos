@@ -11,33 +11,51 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import environ
+import itertools
 import os
+
 from pathlib import Path
 
 env = environ.Env()
 
-REQUIRED_ENV_VARS = [
-    "SECRET_KEY",
-    # POSTGRES
-    "POSTGRES_DB",
-    "POSTGRES_USER",
-    "POSTGRES_PASSWORD",
-    "POSTGRES_HOST",
-    # MAILGUN
-    "MAILGUN_API_KEY",
-    "MAILGUN_SENDER_DOMAIN",
-    "DEFAULT_FROM_EMAIL",
-    "SERVER_EMAIL",
-    # NAMECHEAP
-    "NAMECHEAP_API_USER",
-    "NAMECHEAP_API_KEY",
-    "NAMECHEAP_USERNAME",
-    "NAMECHEAP_IP",
-    "NAMECHEAP_SANDBOX",
-]
+ENV_VARS = {
+    "core": [
+        "SECRET_KEY",
+        "DEFAULT_FROM_EMAIL",
+        "SERVER_EMAIL",
+    ],
+    "postgres": [
+        "POSTGRES_DB",
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_HOST",
+    ],
+    "mailgun": [
+        "MAILGUN_API_KEY",
+        "MAILGUN_SENDER_DOMAIN",
+    ],
+    "namecheap": [
+        "NAMECHEAP_API_USER",
+        "NAMECHEAP_API_KEY",
+        "NAMECHEAP_USERNAME",
+        "NAMECHEAP_IP",
+        "NAMECHEAP_SANDBOX",
+    ]
+}
+
+REQUIRED_ENV_VARS = env.list('REQUIRED_ENV_VARS', default=None)
+
+if not REQUIRED_ENV_VARS:
+    raise RuntimeError("REQUIRED_ENV_VARS not set")
+
+REQUIRED_ENV_VARS_LIST = list(
+    itertools.chain.from_iterable(
+        [ENV_VARS[k] for k in REQUIRED_ENV_VARS]
+        )
+    )
 
 # quit immediately if we do not have the right environment variables
-missing_vars = [var for var in REQUIRED_ENV_VARS if not env(var, default=None)]
+missing_vars = [var for var in REQUIRED_ENV_VARS_LIST if not env(var, default=None)]
 if len(missing_vars) != 0:
     raise RuntimeError(f"Missing required environment variable(s): {missing_vars}")
 
