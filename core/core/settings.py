@@ -18,14 +18,22 @@ env = environ.Env()
 
 REQUIRED_ENV_VARS = [
     "SECRET_KEY",
+    # POSTGRES
     "POSTGRES_DB",
     "POSTGRES_USER",
     "POSTGRES_PASSWORD",
     "POSTGRES_HOST",
+    # MAILGUN
     "MAILGUN_API_KEY",
     "MAILGUN_SENDER_DOMAIN",
     "DEFAULT_FROM_EMAIL",
     "SERVER_EMAIL",
+    # NAMECHEAP
+    "NAMECHEAP_API_USER",
+    "NAMECHEAP_API_KEY",
+    "NAMECHEAP_USERNAME",
+    "NAMECHEAP_IP",
+    "NAMECHEAP_SANDBOX",
 ]
 
 # quit immediately if we do not have the right environment variables
