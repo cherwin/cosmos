@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Registrar, Domain
+
+@admin.register(Registrar)
+class RegistrarAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Domain)
+class DomainAdmin(admin.ModelAdmin):
+    pass
