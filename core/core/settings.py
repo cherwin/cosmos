@@ -101,7 +101,6 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "newsletter",
     "anymail",
-    "landing",
     "domains",
 ]
 
@@ -188,9 +187,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

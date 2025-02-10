@@ -19,9 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
 
+from .views import landing_page
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", landing_page),
     path("newsletter/", include("newsletter.urls")),
-    path("", include("landing.urls")),
 ] + debug_toolbar_urls()
