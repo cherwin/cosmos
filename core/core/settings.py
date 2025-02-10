@@ -106,6 +106,7 @@ INSTALLED_APPS = [
     "newsletter",
     "anymail",
     "landing",
+    "domains",
 ]
 
 MIDDLEWARE = [
